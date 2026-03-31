@@ -2,6 +2,8 @@ package org.example.models;
 
 import org.example.exceptions.SoldeInsuffisantException;
 
+import java.util.Objects;
+
 public class Courant {
     private String numero;
     private double solde;
@@ -60,6 +62,28 @@ public class Courant {
         this.titulaire = titulaire;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Courant courant = (Courant) o;
+        return Double.compare(getSolde(), courant.getSolde()) == 0 && Double.compare(getLigneDeCredit(), courant.getLigneDeCredit()) == 0 && Objects.equals(getNumero(), courant.getNumero()) && Objects.equals(getTitulaire(), courant.getTitulaire());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumero(), getSolde(), getLigneDeCredit(), getTitulaire());
+    }
+
+    @Override
+    public String toString() {
+        return "Courant{" +
+                "numero='" + numero + '\'' +
+                ", solde=" + solde +
+                ", ligneDeCredit=" + ligneDeCredit +
+                ", titulaire=" + titulaire +
+                '}';
+    }
+
     public void retrait(double montant){
         if (montant < 0){
             throw new IllegalArgumentException("Le montant du retrait ne peut pas être négatif");
@@ -78,4 +102,12 @@ public class Courant {
         this.setSolde(this.getSolde() + montant);
 
     }
+
+    public static double  calculerSommeSoldes(Courant compte1, Courant compte2){
+        double s1 = compte1.getSolde() < 0 ? 0 : compte1.getSolde();
+        double s2 = compte2.getSolde() < 0 ? 0 : compte2.getSolde();
+        return s1 + s2;
+    }
+
+
 }

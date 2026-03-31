@@ -1,6 +1,7 @@
 package org.example.models;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Personne {
     private String nom;
@@ -35,5 +36,26 @@ public class Personne {
 
     public void setDateNaiss(LocalDate dateNaiss) {
         this.dateNaiss = dateNaiss;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Personne personne = (Personne) o;
+        return Objects.equals(getNom(), personne.getNom()) && Objects.equals(getPrenom(), personne.getPrenom()) && Objects.equals(getDateNaiss(), personne.getDateNaiss());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNom(), getPrenom(), getDateNaiss());
+    }
+
+    @Override
+    public String toString() {
+        return "Personne{" +
+                "nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaiss=" + dateNaiss +
+                '}';
     }
 }
