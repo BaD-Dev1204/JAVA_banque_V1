@@ -8,6 +8,9 @@ public class Courant {
     private double ligneDeCredit;
     private Personne titulaire;
 
+    public Courant() {
+    }
+
     public Courant(String numero, double solde, double ligneDeCredit, Personne titulaire) {
         this.numero = numero;
         this.setLigneDeCredit(ligneDeCredit);
@@ -16,10 +19,7 @@ public class Courant {
     }
 
     public Courant(String numero, Personne titulaire) {
-        this.numero = numero;
-        this.titulaire = titulaire;
-        this.solde = 0;
-        this.ligneDeCredit = 0;
+        this(numero, 0, 0, titulaire);
     }
 
     public String getNumero() {
@@ -78,6 +78,4 @@ public class Courant {
         this.setSolde(this.getSolde() + montant);
 
     }
-
-
 }
