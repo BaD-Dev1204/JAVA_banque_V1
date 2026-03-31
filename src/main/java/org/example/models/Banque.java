@@ -6,14 +6,14 @@ import java.util.Objects;
 
 public class Banque {
     private String nom;
-    private Map<String, Courant> comptes;
+    private Map<String, Compte> comptes;
 
     public Banque(String nom) {
         this.nom = nom;
         this.comptes = new HashMap<>();
     }
 
-    public Banque(String nom, Map<String, Courant> comptes) {
+    public Banque(String nom, Map<String, Compte> comptes) {
         this.nom = nom;
         this.comptes = comptes;
     }
@@ -26,23 +26,29 @@ public class Banque {
         this.nom = nom;
     }
 
-    public Map<String, Courant> getComptes() {
+    public Map<String, Compte> getComptes() {
         return comptes;
     }
 
-    public void setComptes(Map<String, Courant> comptes) {
+    public void setComptes(Map<String, Compte> comptes) {
         this.comptes = comptes;
     }
 
-    public void ajouter(Courant courant) {
-        comptes.put(courant.getNumero(), courant);
+    public void ajouter(Compte compte) {
+        if (compte == null){
+            throw new IllegalArgumentException("Compte null");
+        }
+        if (comptes.containsKey(compte.getNumero())) {
+            throw new IllegalArgumentException("Compte déjà existant");
+        }
+        comptes.put(compte.getNumero(), compte);
     }
 
     public void supprimer(String numero) {
         comptes.remove(numero);
     }
 
-    public Courant getCompte(String numero) {
+    public Compte getCompte(String numero) {
         return comptes.get(numero);
     }
 
@@ -70,7 +76,7 @@ public class Banque {
 
     public double avoirDesComptes(Personne titulaire){
         double total = 0;
-        for (Courant compte : comptes.values()){
+        for (Compte compte : comptes.values()){
             if (compte.getTitulaire().equals(titulaire)){
                 total += compte.getSolde() < 0 ? 0 : compte.getSolde();
 
